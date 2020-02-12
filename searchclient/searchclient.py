@@ -20,29 +20,32 @@ class SearchClient:
                 print('Error, client does not support colors.', file=sys.stderr, flush=True)
                 sys.exit(1)
 
+
             # Read lines for level.
             self.initial_state = State()
             row = 0
-
             while line:
                 State.walls.append([])
-                self.initial_state.boxes.append([])
                 State.goals.append([])
+                self.initial_state.boxes.append([])
+
                 for col, char in enumerate(line):
                     State.walls[row].append(None)
-                    self.initial_state.boxes[row].append(None)
                     State.goals[row].append(None)
-
+                    self.initial_state.boxes[row].append(None)
                     if char == '+':
                         State.walls[row][col] = True
                     elif char in "0123456789":
                         if self.initial_state.agent_row is not None:
-                            print('Error, encountered a second agent (client only supports one agent).', file=sys.stderr, flush=True)
+                            print('Error, encountered a second agent (client only supports one agent).',
+                                  file=sys.stderr, flush=True)
                             sys.exit(1)
                         self.initial_state.agent_row = row
                         self.initial_state.agent_col = col
-                    elif char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ": self.initial_state.boxes[row][col] = char
-                    elif char in "abcdefghijklmnopqrstuvwxyz": State.goals[row][col] = char
+                    elif char in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+                        self.initial_state.boxes[row][col] = char
+                    elif char in "abcdefghijklmnopqrstuvwxyz":
+                        State.goals[row][col] = char
                     elif char == ' ':
                         # Free cell.
                         pass
@@ -52,9 +55,8 @@ class SearchClient:
                 row += 1
                 line = server_messages.readline().rstrip()
 
-            State.MAX_ROW = len(State.walls)
-            State.MAX_COL = len(State.walls[0])
-
+            State.MAX_COL = col + 1
+            State.MAX_ROW = row
         except Exception as ex:
             print('Error parsing level: {}.'.format(repr(ex)), file=sys.stderr, flush=True)
             sys.exit(1)
@@ -82,7 +84,7 @@ class SearchClient:
                 return leaf.extract_plan()
 
             strategy.add_to_explored(leaf)
-            for child_state in leaf.get_children(): # The list of expanded states is shuffled randomly; see state.py.
+            for child_state in leaf.get_children():  # The list of expanded states is shuffled randomly; see state.py.
                 if not strategy.is_explored(child_state) and not strategy.in_frontier(child_state):
                     strategy.add_to_frontier(child_state)
 
@@ -113,10 +115,11 @@ def main(strategy_str: 'str'):
     else:
         # Default to BFS strategy.
         strategy = StrategyBFS()
-        print('Defaulting to BFS search. Use arguments -bfs, -dfs, -astar, -wastar, or -greedy to set the search strategy.', file=sys.stderr, flush=True)
+        print(
+            'Defaulting to BFS search. Use arguments -bfs, -dfs, -astar, -wastar, or -greedy to set the search strategy.',
+            file=sys.stderr, flush=True)
 
     solution = client.search(strategy)
-
     if solution is None:
         print(strategy.search_status(), file=sys.stderr, flush=True)
         print('Unable to solve level.', file=sys.stderr, flush=True)
@@ -130,21 +133,29 @@ def main(strategy_str: 'str'):
             print(state.action, flush=True)
             response = server_messages.readline().rstrip()
             if 'false' in response:
-                print('Server responsed with "{}" to the action "{}" applied in:\n{}\n'.format(response, state.action, state), file=sys.stderr, flush=True)
+                print('Server responsed with "{}" to the action "{}" applied in:\n{}\n'.format(response, state.action,
+                                                                                               state), file=sys.stderr,
+                      flush=True)
                 break
 
 
 if __name__ == '__main__':
     # Program arguments.
     parser = argparse.ArgumentParser(description='Simple client based on state-space graph search.')
-    parser.add_argument('--max-memory', metavar='<MB>', type=float, default=2048.0, help='The maximum memory usage allowed in MB (soft limit, default 2048).')
+    parser.add_argument('--max-memory', metavar='<MB>', type=float, default=2048.0,
+                        help='The maximum memory usage allowed in MB (soft limit, default 2048).')
 
     strategy_group = parser.add_mutually_exclusive_group()
-    strategy_group.add_argument('-bfs', action='store_const', dest='strategy', const='bfs', help='Use the BFS strategy.')
-    strategy_group.add_argument('-dfs', action='store_const', dest='strategy', const='dfs', help='Use the DFS strategy.')
-    strategy_group.add_argument('-astar', action='store_const', dest='strategy', const='astar', help='Use the A* strategy.')
-    strategy_group.add_argument('-wastar', action='store_const', dest='strategy', const='wastar', help='Use the WA* strategy.')
-    strategy_group.add_argument('-greedy', action='store_const', dest='strategy', const='greedy', help='Use the Greedy strategy.')
+    strategy_group.add_argument('-bfs', action='store_const', dest='strategy', const='bfs',
+                                help='Use the BFS strategy.')
+    strategy_group.add_argument('-dfs', action='store_const', dest='strategy', const='dfs',
+                                help='Use the DFS strategy.')
+    strategy_group.add_argument('-astar', action='store_const', dest='strategy', const='astar',
+                                help='Use the A* strategy.')
+    strategy_group.add_argument('-wastar', action='store_const', dest='strategy', const='wastar',
+                                help='Use the WA* strategy.')
+    strategy_group.add_argument('-greedy', action='store_const', dest='strategy', const='greedy',
+                                help='Use the Greedy strategy.')
 
     args = parser.parse_args()
 

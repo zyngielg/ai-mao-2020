@@ -75,11 +75,11 @@ class StrategyBFS(Strategy):
 class StrategyDFS(Strategy):
     def __init__(self):
         super().__init__()
-        self.frontier = deque()
+        self.frontier = []
         self.frontier_set = set()
 
     def get_and_remove_leaf(self) -> 'State':
-        leaf = self.frontier.pop()
+        leaf = self.frontier.pop(-1)
         self.frontier_set.remove(leaf)
         return leaf
     

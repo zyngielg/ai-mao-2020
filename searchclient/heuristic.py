@@ -75,7 +75,7 @@ class Heuristic(metaclass=ABCMeta):
     # TODO: method for calculating shortest path with aknowledginthe walls
     def h(self, state: 'State') -> 'int':
         goals = State.goals[Heuristic.goal_x][Heuristic.goal_y]
-        test = self.shortest_path_between_source_and_goals(state, goals)
+        #test = self.shortest_path_between_source_and_goals(state, goals)
         x_diff = abs(state.agent_row - Heuristic.goal_x)
         y_diff = abs(state.agent_col - Heuristic.goal_y)
         # estimated cost of reaching a goal from state

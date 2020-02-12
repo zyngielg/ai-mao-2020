@@ -7,11 +7,10 @@ class State:
     _RNG = random.Random(1)
     MAX_ROW = None
     MAX_COL = None
+
     walls = None
     goals = None
 
-    # required in case when the priority queue of greedy has two elements with the same value of h(n). I assume that
-    # the 'oldest' child amongst those with same values would be considered first
     def __lt__(self, other):
         return True
 
@@ -96,8 +95,19 @@ class State:
                 if self.is_free(new_agent_row, new_agent_col):
                     box_row = self.agent_row + action.box_dir.d_row
                     box_col = self.agent_col + action.box_dir.d_col
+                    if self.box_at(box_row, box_col):
+                        child = State(self)
+                        child.agent_row = new_agent_row
+                        child.agent_col = new_agent_col
+                        child.boxes[self.agent_row][self.agent_col] = self.boxes[box_row][box_col]
+                        child.boxes[box_row][box_col] = None
+                        child.parent = self
+                        child.action = action
+                        child.g += 1
+                        children.append(child)
 
         State._RNG.shuffle(children)
+
         return children
 
     def is_initial_state(self) -> 'bool':
@@ -154,11 +164,16 @@ class State:
         for row in range(State.MAX_ROW):
             line = []
             for col in range(State.MAX_COL):
-                if self.boxes[row][col] is not None: line.append(self.boxes[row][col])
-                elif State.goals[row][col] is not None: line.append(State.goals[row][col])
-                elif State.walls[row][col] is not None: line.append('+')
-                elif self.agent_row == row and self.agent_col == col: line.append('0')
-                else: line.append(' ')
+                if self.boxes[row][col] is not None:
+                    line.append(self.boxes[row][col])
+                elif State.goals[row][col] is not None:
+                    line.append(State.goals[row][col])
+                elif State.walls[row][col] is not None:
+                    line.append('+')
+                elif self.agent_row == row and self.agent_col == col:
+                    line.append('0')
+                else:
+                    line.append(' ')
             lines.append(''.join(line))
         return '\n'.join(lines)
 
