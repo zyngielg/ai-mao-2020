@@ -8,6 +8,8 @@ from state import State
 class Heuristic(metaclass=ABCMeta):
     goal_x = None
     goal_y = None
+    goals_coordinates = []
+
 
     def __init__(self, initial_state: 'State'):
         # Here's a chance to pre-process the static parts of the level.
@@ -21,10 +23,11 @@ class Heuristic(metaclass=ABCMeta):
                 goals_field = initial_state.goals[i][j]
 
                 if goals_field is not None:
+                    Heuristic.goals_coordinates.append((i, j))
                     Heuristic.goal_x = i
                     Heuristic.goal_y = j
 
-    def shortest_path_between_source_and_goals(self, start_state: State, goal_states: List[State]) -> dict:
+    def shortest_path_between_source_and_goals(self, start_state: State) -> dict:
         """
         Method calculating the distance between source (start_state) and all goals from goal_states list.
         It shall be used for calculating distances between tiles and boxes/goals.
@@ -42,8 +45,8 @@ class Heuristic(metaclass=ABCMeta):
         while len(queue) > 0:
             curr = queue.pop()
 
-            for goal_state in goal_states:
-                if curr[0] == goal_state.agent_row and curr[1] == goal_state.agent_col:
+            for goal_field in Heuristic,goals_coordinates:
+                if curr[0] == goal_field[0] and curr[1] == goal_field[1]:
                     goal_distance_dict[State.goals[curr[0]], State.goals[curr[1]]] = curr[2]
 
                 # top
@@ -62,24 +65,16 @@ class Heuristic(metaclass=ABCMeta):
 
         return goal_distance_dict
 
-
-
-
-
-
-
-
-
     # TODO: better heuristic. Also aknowledge multiple goals and having boxes
     # idea: take the distance to box X, goal x and get the sum. Go to the box with the lowest sum
-    # TODO: method for calculating shortest path with aknowledginthe walls
+    # TODO: method for calculating shortest path with acknowledging the walls
     def h(self, state: 'State') -> 'int':
-        goals = State.goals[Heuristic.goal_x][Heuristic.goal_y]
-        #test = self.shortest_path_between_source_and_goals(state, goals)
-        x_diff = abs(state.agent_row - Heuristic.goal_x)
-        y_diff = abs(state.agent_col - Heuristic.goal_y)
-        # estimated cost of reaching a goal from state
-        return x_diff + y_diff
+        res = 0
+        for goal in Heuristic.goals_coordinates:
+            x_diff = abs(state.agent_row - goal[0])
+            y_diff = abs(state.agent_col - goal[1])
+            res += x_diff + y_diff
+        return res
 
     @abstractmethod
     def f(self, state: 'State') -> 'int': pass

@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6399b36d-6cfb-468f-aa46-3404621bd6b0" name="Default Changelist" comment="" />
+    <list default="true" id="6399b36d-6cfb-468f-aa46-3404621bd6b0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/searchclient/heuristic.py" beforeDir="false" afterPath="$PROJECT_DIR$/searchclient/heuristic.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1XegqHE9YE59OfnK01wBYqgSsDp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -15,8 +22,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/arianna/searchclient" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -29,11 +37,33 @@
       <option name="presentableId" value="Default" />
       <updated>1581412162710</updated>
       <workItem from="1581412165437" duration="4246000" />
-      <workItem from="1581430560937" duration="1039000" />
+      <workItem from="1581430560937" duration="4483000" />
+      <workItem from="1581439747089" duration="781000" />
+      <workItem from="1581500549612" duration="6624000" />
+      <workItem from="1581523205298" duration="792000" />
+      <workItem from="1581524343544" duration="402000" />
+      <workItem from="1581524914206" duration="4273000" />
+      <workItem from="1581607499151" duration="34000" />
+      <workItem from="1581675379940" duration="16000" />
+      <workItem from="1581690260945" duration="678000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="743" y="311" width="424" height="482" key="FileChooserDialogImpl" timestamp="1581504262741">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="743" y="311" width="424" height="482" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1581504262741" />
+    <state x="739" y="192" width="432" height="721" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581607528073">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="739" y="192" width="432" height="721" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1581607528073" />
+    <state x="608" y="264" width="902" height="578" key="find.popup" timestamp="1581505207191">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="608" y="264" width="902" height="578" key="find.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1581505207191" />
   </component>
 </project>
